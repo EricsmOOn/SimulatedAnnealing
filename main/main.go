@@ -15,6 +15,7 @@ func main() {
 	fmt.Print(getResult())
 }
 
+//得到这组排列总里程数
 func getResult() float64 {
 	sum := 0.0
 	data := ReadData()

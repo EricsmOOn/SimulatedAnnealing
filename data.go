@@ -7,16 +7,16 @@ import (
 	"strings"
 )
 
-var DataFileName = "1.att48.tsp.txt"
+var DataFileName = "4.kroA100.tsp.txt"
 
 type Data struct {
 	CityNum int
-	PosX float64
-	PosY float64
+	PosX    float64
+	PosY    float64
 }
 
 func (d Data) String() string {
-	return fmt.Sprintf("[CityNum:%3d, PosX:%5f, PosY:%5f]\n", d.CityNum,d.PosX,d.PosY)
+	return fmt.Sprintf("[CityNum:%3d, PosX:%5f, PosY:%5f]\n", d.CityNum, d.PosX, d.PosY)
 }
 
 var data []Data
@@ -39,7 +39,6 @@ func InitSampleData() {
 	}
 }
 
-
 func GetFileLines() ([]string, error) {
 	var result []string
 	filePath := "./data/" + DataFileName
@@ -56,7 +55,7 @@ func GetFileLines() ([]string, error) {
 		}
 		result = append(result, lineStr)
 	}
-	return result[6:len(result) - 1], nil
+	return result[6 : len(result)-1], nil
 }
 
 func GetDataNum() int {
