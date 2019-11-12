@@ -3,37 +3,14 @@ package main
 import (
 	"fmt"
 	. "github.com/EricsmOOn/SimulatedAnnealing"
-	"math"
-	"math/rand"
-	"time"
 )
-
-var R = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 func main() {
 	InitSampleData() //文件预处理
-	fmt.Print(getResult())
-}
-
-//得到这组排列总里程数
-func getResult() float64 {
-	sum := 0.0
-	data := ReadData()
-	for i := 0; i < GetDataNum()-1; i++ {
-		sum += getCityDistance(data[i], data[i+1])
-	}
-	return sum
-}
-
-//两个城市间的距离 Map
-func getCityDistance(d1 Data, d2 Data) float64 {
-	return math.Hypot(d1.PosX-d2.PosX, d1.PosY-d2.PosY)
-}
-
-//是否愿意接受新解
-func accept(delta float64, temper float64) bool {
-	if delta <= 0 {
-		return true
-	}
-	return R.Float64() <= math.Exp((-delta)/temper)
+	fmt.Printf("模拟退火启动:\n文件名称:%s\n初始化温度:%.1f\n温度下界限:%f\n温度下降率:%f\n内循环次数:%d\n最短路径:", DataFileName, Temp, TMin, Delta, SearchTime)
+	//开始模拟退火
+	r := Sa()
+	best := GetBest()
+	fmt.Printf("\n退火解为: %7.3f ,最优解为: %7.3f ,误差率为: %4.2f", r, best, (r-best)/best*100)
+	fmt.Print("%")
 }

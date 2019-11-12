@@ -7,7 +7,10 @@ import (
 	"strings"
 )
 
-var DataFileName = "4.kroA100.tsp.txt"
+//var DataFileName = "1.att48.tsp.txt"
+var DataFileName = "3.eil76.tsp.txt"
+
+//var DataFileName = "4.kroA100.tsp.txt"
 
 type Data struct {
 	CityNum int
@@ -16,7 +19,8 @@ type Data struct {
 }
 
 func (d Data) String() string {
-	return fmt.Sprintf("[CityNum:%3d, PosX:%5f, PosY:%5f]\n", d.CityNum, d.PosX, d.PosY)
+	//return fmt.Sprintf("[CityNum:%3d, PosX:%1f, PosY:%1f]\n", d.CityNum, d.PosX, d.PosY)
+	return fmt.Sprintf("%2d ->", d.CityNum)
 }
 
 var data []Data
@@ -28,7 +32,8 @@ func ReadData() []Data {
 func InitSampleData() {
 	data = make([]Data, 0)
 	var d Data
-	file, _ := GetFileLines()
+	file, _ := GetFileLines("./data/" + DataFileName)
+	file = file[6 : len(file)-1]
 	for _, s := range file {
 		sp := strings.Split(s, " ")
 		sp0, _ := strconv.Atoi(sp[0])
@@ -37,11 +42,11 @@ func InitSampleData() {
 		d = Data{sp0, float64(sp1), float64(sp2)}
 		data = append(data, d)
 	}
+	data = append(data, data[0])
 }
 
-func GetFileLines() ([]string, error) {
+func GetFileLines(filePath string) ([]string, error) {
 	var result []string
-	filePath := "./data/" + DataFileName
 	b, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		fmt.Printf("read file: %v error: %v", filePath, err)
@@ -55,7 +60,7 @@ func GetFileLines() ([]string, error) {
 		}
 		result = append(result, lineStr)
 	}
-	return result[6 : len(result)-1], nil
+	return result, nil
 }
 
 func GetDataNum() int {
